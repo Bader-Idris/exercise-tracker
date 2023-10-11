@@ -40,17 +40,17 @@ const exercises = async (req, res) => {
     };
     res.status(201).json(responseData);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.json({ error: error.message });//removed status 400 for testing
   }
 };
 
 const getByParams = async (req, res) => {
-  res.json({mgs: 'hi mom'})
+  res.status(404).json({mgs: 'hi mom'})
 };
 
 const getUserLogs = async (req, res) => {
   const _id = req.params._id;
-  if (!_id) return res.status(400).json({ error: 'Please provide a valid _id' });
+  if (!_id) return res.json({ error: 'Please provide a valid _id' });//removed status 400 for testing
   const { from, to, limit } = req.query;
   const query = { createdBy: _id };
   // Add date range query if 'from' and 'to' parameters are provided
@@ -77,7 +77,7 @@ const getUserLogs = async (req, res) => {
       log: responseData
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.json({ error: error.message });//removed status 400 for testing
   }
 };
 

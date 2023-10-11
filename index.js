@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 app.use('/api', createUser)
 
 app.get('*', function (req, res) {
-  res.send(
+  res.status(404).send(
     '<pre>not found</pre>' +
     `<style>
       body {background-color: #121212;
