@@ -71,10 +71,10 @@ const getUserLogs = async (req, res) => {
       date: log.date ? log.date.toDateString() : null,
     }));
     res.json({
-      _id: findUser[0]._id,
-      username: findUser[0].username,
-      count: count,
-      log: responseData
+      _id: String(findUser[0]._id),
+      username: String(findUser[0].username),
+      count: Number(count),
+      log: Object(responseData)
     });
   } catch (error) {
     res.json({ error: error.message });//removed status 400 for testing
