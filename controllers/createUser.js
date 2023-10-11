@@ -22,7 +22,8 @@ const getAllUsers = async (req, res) => {
 }
 
 const exercises = async (req, res) => {
-  const { ':_id': _id, description, duration, date } = req.body;
+  const _id = req.params[":_id"]; // Access the parameter as a string
+  const { description, duration, date } = req.body;
   // Set the default value for date if it is not provided
   const currentDate = date ? new Date(date) : Date.now();
   try {
@@ -49,7 +50,7 @@ const getByParams = async (req, res) => {
 };
 
 const getUserLogs = async (req, res) => {
-  const _id = req.params._id;
+  const _id = req.params[":_id"];
   if (!_id) return res.json({ error: 'Please provide a valid _id' });//removed status 400 for testing
   const { from, to, limit } = req.query;
   const query = { createdBy: _id };
