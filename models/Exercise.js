@@ -55,6 +55,7 @@ exerciseSchema.pre('save', async function (next) {
     this.username = user.username;
     next();
   } catch (error) {
+    console.log(error)//temp to see what mentor wants!🔴
     next(error);
   }
 });

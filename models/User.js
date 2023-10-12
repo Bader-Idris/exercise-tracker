@@ -10,9 +10,9 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-  const username = this.username.trim();
-  const nameLength = username.length;
-  if (nameLength > 2 && nameLength < 51) {
+  const username = this.username//.trim(); // they don't trim it 😡
+  // const nameLength = username.length;
+  // if (nameLength > 2 && nameLength < 51) {
     try {
       // Perform any other validation or modification before saving the user
       this.username = username;
@@ -20,20 +20,20 @@ userSchema.pre('save', async function (next) {
     } catch (error) {
       next(error);
     }
-  } else {
-    next(new Error('Please provide a valid name'));
-  }
+  // } else {
+    // next(new Error('Please provide a valid name'));
+  // }
 });
 
 const findByUserID = async (ID) => {
   try {
     const foundUser = await User.find({ _id: ID }).select('_id username');
     if (foundUser.length === 0) {
-      throw new Error('Please provide a valid user ID');
+      return res.status(404).send('Please provide a valid user ID');
     }
     return foundUser;
   } catch (error) {
-    throw new Error('Please provide a valid user ID');
+    return res.status(404).send('Please provide a valid user ID');
   }
 };
 
@@ -42,11 +42,11 @@ const findAllUsers = async () => {
   try {
     const foundUsers = await User.find({}).select('_id username');
     if (foundUsers.length === 0) {
-      throw new Error(msg);
+      return res.status(404).send(msg);
     }
     return foundUsers;
   } catch (error) {
-    throw new Error(msg);
+    return res.status(404).send(msg);
   }
 };
 

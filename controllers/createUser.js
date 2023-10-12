@@ -8,7 +8,7 @@ const addNewUser = async (req, res) => {
       username: broughtName,
     });
     await user.save();
-    return res.json({
+    return res.status(201).json({
       username: broughtName,
       _id: user._id
     });
@@ -41,6 +41,7 @@ const exercises = async (req, res) => {
     };
     res.status(201).json(responseData);
   } catch (error) {
+    console.log(error)//temp to see what mentor wants!🔴
     res.json({ error: error.message });//removed status 400 for testing
   }
 };
@@ -51,7 +52,7 @@ const getByParams = async (req, res) => {
 
 const getUserLogs = async (req, res) => {
   const _id = req.params[":_id"];
-  if (!_id) return res.json({ error: 'Please provide a valid _id' });//removed status 400 for testing
+  if (!_id) return res.status(404).json({ error: 'Please provide a valid _id' });//removed status 400 for testing
   const { from, to, limit } = req.query;
   const query = { createdBy: _id };
   // Add date range query if 'from' and 'to' parameters are provided
@@ -78,6 +79,7 @@ const getUserLogs = async (req, res) => {
       log: Object(responseData)
     });
   } catch (error) {
+    console.log(error)//temp to see what mentor wants!🔴
     res.json({ error: error.message });//removed status 400 for testing
   }
 };
