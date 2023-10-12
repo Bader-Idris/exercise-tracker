@@ -11,6 +11,11 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
+app.use((req, res, next) => {
+  res.setHeader('Permissions-Policy', 'interest-cohort=(), attribution-reporting=(), run-ad-auction=(), join-ad-interest-group=(), idle-detection=(), browsing-topics=()');
+  next();
+});
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
