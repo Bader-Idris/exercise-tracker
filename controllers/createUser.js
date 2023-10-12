@@ -22,15 +22,13 @@ const getAllUsers = async (req, res) => {
 }
 
 const exercises = async (req, res) => {
-  const { ':_id': _id, description, duration, date } = req.body;
-  // Set the default value for date if it is not provided
+  const { _id } = req.params;
+  const { ':_id': altId, description, duration, date } = req.body;
+  const exerciseId = _id || altId; // Use _id if ':_id' is not provided
   const currentDate = date ? new Date(date) : Date.now();
   try {
-    // Create a new exercise using the Exercise model
-    const newExercise = new Exercise({ createdBy: _id, description, duration, date: currentDate });
-    // Save the new exercise to the database
+    const newExercise = new Exercise({ createdBy: exerciseId, description, duration, date: currentDate });
     const savedExercise = await newExercise.save();
-    // Prepare the response data
     const responseData = {
       _id: savedExercise.createdBy,
       username: savedExercise.username,
